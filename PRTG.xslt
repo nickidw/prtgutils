@@ -25,7 +25,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
           }
         </style>
         <center>
-          <h1>Devices without at least 1 Disk, 1 CPU or 2 Memory sensors (SNMP)</h1>
+          <h1>Devices without at least 1 Disk, 1 CPU and 2 Memory sensors (SNMP)</h1>
           <table style="border:0px">
           <tr>
             <th>Device</th>
@@ -45,7 +45,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
               <xsl:for-each select="nodes/device">
                   <xsl:variable name="sensorcount"
                     select="count(nodes/sensor[contains(data/sensorkind,'snmpmemory')]) + count(nodes/sensor[contains(data/sensorkind,'snmpdiskfree')]) + count(nodes/sensor[contains(data/sensorkind,'snmpcpu')]) + count(nodes/sensor[contains(data/sensorkind,'snmpuptime')])"/>
-                  <xsl:if test="not(contains(data/name, 'Probe Device')) and not(contains(data/name, 'PRTG')) and not($sensorcount >= 4)">
+                  <xsl:if test="not(contains(data/name, 'Probe Device')) and not(contains(data/name, 'PRTG')) and not($sensorcount >= 4) and not(contains(data/tags, 'vendors_Cisco')) and not(contains(data/tags, 'gateway'))">
                     <tr>
                       <td><xsl:value-of select="data/name"/>
                       <!--<xsl:value-of select="$sensorcount"/>-->
