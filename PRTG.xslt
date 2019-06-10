@@ -45,7 +45,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
               <xsl:for-each select="nodes/device">
                   <xsl:variable name="sensorcount"
                     select="count(nodes/sensor[contains(data/sensorkind,'snmpmemory')]) + count(nodes/sensor[contains(data/sensorkind,'snmpdiskfree')]) + count(nodes/sensor[contains(data/sensorkind,'snmpcpu')]) + count(nodes/sensor[contains(data/sensorkind,'snmpuptime')])"/>
-                  <xsl:if test="not(contains(data/name, 'Probe Device')) and not(contains(data/name, 'PRTG')) and not($sensorcount >= 4) and not(contains(data/tags, 'vendors_Cisco')) and not(contains(data/tags, 'gateway'))">
+                  <xsl:if test="not(contains(data/name, 'Probe Device')) and not(contains(data/name, 'PRTG')) and not($sensorcount >= 4) and not(contains(data/tags, 'vendors_Cisco')) and not(contains(data/tags, 'gateway')) and not(contains(data/tags, 'alienvault_interface')) and not(contains(data/tags, 'vmware_esx'))">
                     <tr>
                       <td><xsl:value-of select="data/name"/>
                       <!--<xsl:value-of select="$sensorcount"/>-->
