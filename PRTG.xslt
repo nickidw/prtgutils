@@ -35,21 +35,23 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
             <th>Uptime <br/>sensor<br/> count</th>
           </tr>
           <xsl:for-each select="basenode/nodes/group[@id='0']/nodes/probenode">
+            <xsl:sort order ="ascending" select="data/name"/>
             <tr>
               <td colspan="5">
-                <b>
-                <xsl:value-of select="data/name"/>
-                </b>
+                <b><xsl:value-of select="data/name"/></b>
               </td>
             </tr>
               <xsl:for-each select="nodes/device | nodes/group/nodes/device">
-                  <xsl:variable name="sensorcount"
+                <xsl:sort order ="ascending" select="data/name"/>
+                <xsl:variable name="sensorcount"
                     select="count(nodes/sensor[contains(data/sensorkind,'snmpmemory')]) + count(nodes/sensor[contains(data/sensorkind,'snmpdiskfree')]) + count(nodes/sensor[contains(data/sensorkind,'snmpcpu')]) + count(nodes/sensor[contains(data/sensorkind,'snmpuptime')])"/>
-                  <xsl:if test="not(contains(data/name, 'Probe Device')) and not(contains(data/name, 'PRTG')) and not($sensorcount >= 4) and not(contains(data/tags, 'vendors_Cisco')) and not(contains(data/tags, 'gateway')) and not(contains(data/tags, 'alienvault_interface')) and not(contains(data/tags, 'vmware_esx')) and not(contains(data/tags, 'waf_vip'))">
-                    <tr>
-                      <td><xsl:value-of select="data/name"/>
-                      <!--<xsl:value-of select="$sensorcount"/>-->
-                    </td>
+                  <xsl:if test="not(contains(data/name, 'Probe Device')) and not(contains(data/name, 'PRTG')) and not($sensorcount >= 4) and not(contains(data/tags, 'vendors_Cisco')) and not(contains(data/tags, 'gateway')) and not(contains(data/tags, 'alienvault_interface')) and not(contains(data/tags, 'vmware_esx')) and not(contains(data/tags, 'waf_vip')) and not(contains(data/tags, 'remote_endpoint')) and not(contains(data/tags, 'ups')) and not(contains(data/tags, 'san_controller'))">
+                  <tr>
+                      <td>
+                        <a href="https://prtg.networks.local/device.htm?id={@id}" target="_new">
+                          <xsl:value-of select="data/name"/>
+                        </a>
+                      </td>
                   <td><xsl:value-of select="count(nodes/sensor[contains(data/sensorkind,'snmpmemory')])"/></td>
                   <td>
                     <xsl:value-of select="count(nodes/sensor[contains(data/sensorkind,'snmpdiskfree')])"/>
