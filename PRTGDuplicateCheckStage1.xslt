@@ -51,7 +51,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
               </td>
               <td>
                 <!--<xsl:for-each select="//nodes/device[contains(translate(data/name, ' ', ''), 'SRV115RADB01') and @id != current()/@id]">-->
-                <xsl:for-each select="//nodes/device[contains(data/name, translate(translate(current()/data/host, '&#10;', ''), ' ', '')) and @id != current()/@id]">
+                <xsl:for-each select="//nodes/device[not(contains(data/name, 'Probe Device')) and (contains(data/name, concat(translate(translate(current()/data/host, '&#10;', ''), ' ', ''), '.')) or translate(translate(data/name, '&#10;', ''), ' ', '') = translate(translate(current()/data/host, '&#10;', ''), ' ', '') or translate(translate(data/host, '&#10;', ''), ' ', '') = translate(translate(current()/data/host, '&#10;', ''), ' ', '')) and @id != current()/@id]">
                   <!--<xsl:for-each select="//nodes/device[contains(data/name, translate(current()/data/host, '\n', '')) and @id != current()/@id]">-->
                   <div>
                     <a href="https://prtg.networks.local/device.htm?id={@id}" target="_new">
