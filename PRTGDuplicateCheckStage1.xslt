@@ -29,52 +29,61 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
         <center>
           <h1>Devices list</h1>
           <table style="border:0px">
-          <tr>
-            <th>Device</th>
-            <th>Lab<br/>Server</th>
-            <th>Group</th>
-            <th>Host</th>
-            <th>Service URL</th>
-            <th>Duplicates</th>
-          </tr>
-          <xsl:for-each select="//nodes/device">
-            <xsl:sort order ="ascending" select="data/name"/>
             <tr>
-              <td>
-                <b>
-                  <a href="https://prtg.networks.local/device.htm?id={@id}" target="_new">
-                    <xsl:value-of select="translate(data/name, ' ', '')"/>
-                  </a>
-                </b>
-              </td>
-              <td>
-                <xsl:if test="contains(data/tags, 'Lab_Server')">
-                  X
-                </xsl:if>
-              </td>              <td>
-                <xsl:value-of select="ancestor::probenode/data/name"/>
-              </td>
-              <td>
-                <xsl:value-of select="translate(translate(data/host, '&#10;', ''), ' ', '')"/>
-              </td>
-              <td>
-                <xsl:value-of select="translate(data/serviceurl, ' ', '')"/>
-              </td>
-              <td>
-                <!--<xsl:for-each select="//nodes/device[contains(translate(data/name, ' ', ''), 'SRV115RADB01') and @id != current()/@id]">-->
-                <xsl:for-each select="//nodes/device[not(contains(data/name, 'Probe Device')) and (contains(data/name, concat(translate(translate(current()/data/host, '&#10;', ''), ' ', ''), '.')) or translate(translate(data/name, '&#10;', ''), ' ', '') = translate(translate(current()/data/host, '&#10;', ''), ' ', '') or translate(translate(data/host, '&#10;', ''), ' ', '') = translate(translate(current()/data/host, '&#10;', ''), ' ', '')) and @id != current()/@id]">
-                  <!--<xsl:for-each select="//nodes/device[contains(data/name, translate(current()/data/host, '\n', '')) and @id != current()/@id]">-->
-                  <div>
-                    <a href="https://prtg.networks.local/device.htm?id={@id}" target="_new">
-                      <xsl:value-of select="data/name"/>
-                    </a>
-                  </div>
-                </xsl:for-each>
-                <!--
-                <xsl:apply-templates select="//nodes/device[contains(translate(data/name, ' ', ''), translate(current()/data/host, ' ', '')) and @id != current()/@id]"/>-->
-              </td>
+              <th>Device</th>
+              <th>
+                Lab<br/>Server
+              </th>
+              <th>Host</th>
+              <th>Service URL</th>
+              <th>Duplicates</th>
             </tr>
-          </xsl:for-each>
+            <xsl:for-each select="basenode/nodes/group[@id='0']/nodes/probenode">
+              <xsl:sort order ="ascending" select="data/name"/>
+              <tr>
+                <td colspan="5">
+                  <b>
+                    <xsl:value-of select="data/name"/>
+                  </b>
+                </td>
+              </tr>
+              <xsl:for-each select="nodes/device | nodes/group/nodes/device">
+                <xsl:sort order ="ascending" select="data/name"/>
+                <tr>
+                  <td>
+                    <b>
+                      <a href="https://prtg.networks.local/device.htm?id={@id}" target="_new">
+                        <xsl:value-of select="translate(data/name, ' ', '')"/>
+                      </a>
+                    </b>
+                  </td>
+                  <td>
+                    <xsl:if test="contains(data/tags, 'Lab_Server')">
+                      X
+                    </xsl:if>
+                  </td>              
+                  <td>
+                    <xsl:value-of select="translate(translate(data/host, '&#10;', ''), ' ', '')"/>
+                  </td>
+                  <td>
+                    <xsl:value-of select="translate(data/serviceurl, ' ', '')"/>
+                  </td>
+                  <td>
+                    <!--<xsl:for-each select="//nodes/device[contains(translate(data/name, ' ', ''), 'SRV115RADB01') and @id != current()/@id]">-->
+                    <xsl:for-each select="//nodes/device[not(contains(data/name, 'Probe Device')) and (contains(data/name, concat(translate(translate(current()/data/host, '&#10;', ''), ' ', ''), '.')) or translate(translate(data/name, '&#10;', ''), ' ', '') = translate(translate(current()/data/host, '&#10;', ''), ' ', '') or translate(translate(data/host, '&#10;', ''), ' ', '') = translate(translate(current()/data/host, '&#10;', ''), ' ', '')) and @id != current()/@id]">
+                      <!--<xsl:for-each select="//nodes/device[contains(data/name, translate(current()/data/host, '\n', '')) and @id != current()/@id]">-->
+                      <div>
+                        <a href="https://prtg.networks.local/device.htm?id={@id}" target="_new">
+                          <xsl:value-of select="data/name"/>
+                        </a>
+                      </div>
+                    </xsl:for-each>
+                    <!--
+                    <xsl:apply-templates select="//nodes/device[contains(translate(data/name, ' ', ''), translate(current()/data/host, ' ', '')) and @id != current()/@id]"/>-->
+                  </td>
+                </tr>
+              </xsl:for-each>
+            </xsl:for-each>
         </table>
         </center>
       </body>
