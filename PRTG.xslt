@@ -13,6 +13,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
           border-collapse: separate;
           background-color: white;
           align: center;
+          font-family: Verdana;
+          font-size:12;
           }
 
           table td {
@@ -29,6 +31,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
           <table style="border:0px">
           <tr>
             <th>Device</th>
+            <th>Lab<br/>server</th>
             <th>Memory<br/>Sensor<br/>count</th>
             <th>Disk<br/>sensor <br/>count</th>
             <th>CPU <br/>sensor<br/> count</th>
@@ -37,7 +40,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
           <xsl:for-each select="basenode/nodes/group[@id='0']/nodes/probenode">
             <xsl:sort order ="ascending" select="data/name"/>
             <tr>
-              <td colspan="5">
+              <td colspan="6">
                 <b><xsl:value-of select="data/name"/></b>
               </td>
             </tr>
@@ -52,6 +55,11 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
                           <xsl:value-of select="data/name"/>
                         </a>
                       </td>
+                    <td>
+                      <xsl:if test="contains(data/tags, 'Lab_Server')">
+                        X
+                      </xsl:if>
+                    </td>
                   <td><xsl:value-of select="count(nodes/sensor[contains(data/sensorkind,'snmpmemory')])"/></td>
                   <td>
                     <xsl:value-of select="count(nodes/sensor[contains(data/sensorkind,'snmpdiskfree')])"/>

@@ -13,6 +13,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
           border-collapse: separate;
           background-color: white;
           align: center;
+          font-family: Verdana;
+          font-size:12;
           }
 
           table td {
@@ -29,6 +31,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
           <table style="border:0px">
           <tr>
             <th>Device</th>
+            <th>Lab<br/>Server</th>
+            <th>Group</th>
             <th>Host</th>
             <th>Service URL</th>
             <th>Duplicates</th>
@@ -42,6 +46,13 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
                     <xsl:value-of select="translate(data/name, ' ', '')"/>
                   </a>
                 </b>
+              </td>
+              <td>
+                <xsl:if test="contains(data/tags, 'Lab_Server')">
+                  X
+                </xsl:if>
+              </td>              <td>
+                <xsl:value-of select="ancestor::probenode/data/name"/>
               </td>
               <td>
                 <xsl:value-of select="translate(translate(data/host, '&#10;', ''), ' ', '')"/>
