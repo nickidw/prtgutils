@@ -1,3 +1,5 @@
 # prtgutils
 PRTG utilities: 
-* XSL stylesheet to interrogate XML configuration and create HTML reports
+* XSL stylesheets to interrogate XML configuration and create HTML reports
+* PRTG.xslt identifies devices without at least 1 CPU, 1 Disk and 2 Memory sensors
+* PRTGDuplicatesStage1.xslt identifies duplicate devices by host = host, host = name or host = partial name
