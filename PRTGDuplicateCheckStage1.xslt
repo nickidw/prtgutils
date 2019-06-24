@@ -69,7 +69,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
                     <xsl:value-of select="translate(data/serviceurl, ' ', '')"/>
                   </td>
                   <td>
-                    <xsl:for-each select="//nodes/device[not(contains(data/name, 'Probe Device')) and (contains(data/name, concat(translate(translate(current()/data/host, '&#10;', ''), ' ', ''), '.')) or translate(translate(data/name, '&#10;', ''), ' ', '') = translate(translate(current()/data/host, '&#10;', ''), ' ', '') or translate(translate(data/host, '&#10;', ''), ' ', '') = translate(translate(current()/data/host, '&#10;', ''), ' ', '')) and @id != current()/@id and not(contains(data/tags, 'server_secondip'))]">
+                    <xsl:for-each select="//nodes/device[not(contains(data/name, 'Probe Device')) and (contains(data/name, concat(translate(translate(current()/data/host, '&#10;', ''), ' ', ''), '.')) or translate(translate(data/name, '&#10;', ''), ' ', '') = translate(translate(current()/data/host, '&#10;', ''), ' ', '') or translate(translate(data/host, '&#10;', ''), ' ', '') = translate(translate(current()/data/host, '&#10;', ''), ' ', '')) and @id != current()/@id and not(contains(data/tags, 'Server_SecondIP')) and not(contains(current()/data/tags, 'Server_SecondIP'))]">
                       <div>
                         <a href="https://prtg.networks.local/device.htm?id={@id}" target="_new">
                           <xsl:value-of select="data/name"/>
