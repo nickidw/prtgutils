@@ -47,7 +47,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
               <xsl:for-each select="nodes/device | nodes/group/nodes/device">
                 <xsl:sort order ="ascending" select="data/name"/>
                 <xsl:variable name="sensorcount"
-                    select="count(nodes/sensor[contains(data/sensorkind,'snmpmemory')]) + count(nodes/sensor[contains(data/sensorkind,'snmpdiskfree')]) + count(nodes/sensor[contains(data/sensorkind,'snmpcpu')]) + count(nodes/sensor[contains(data/sensorkind,'snmpuptime')])"/>
+                    select="count(nodes/sensor[contains(data/sensorkind,'snmpmemory')]) + count(nodes/sensor[contains(data/sensorkind,'wmimemory')]) + count(nodes/sensor[contains(data/sensorkind,'snmpdiskfree')]) + count(nodes/sensor[contains(data/sensorkind,'wmidiskspace')]) + count(nodes/sensor[contains(data/sensorkind,'snmpcpu')]) + count(nodes/sensor[contains(data/sensorkind,'wmiprocessor')]) + count(nodes/sensor[contains(data/sensorkind,'snmplinuxloadavg')]) + count(nodes/sensor[contains(data/sensorkind,'snmpuptime')]) + count(nodes/sensor[contains(data/sensorkind,'wmiuptime')])"/>
                   <xsl:if test="not(contains(data/name, 'Probe Device')) and not(contains(data/name, 'PRTG')) and not($sensorcount >= 4) and not(contains(data/tags, 'vendors_Cisco')) and not(contains(data/tags, 'gateway')) and not(contains(data/tags, 'alienvault_interface')) and not(contains(data/tags, 'vmware_esx')) and not(contains(data/tags, 'waf_vip')) and not(contains(data/tags, 'remote_endpoint')) and not(contains(data/tags, 'ups')) and not(contains(data/tags, 'san_controller')) and not(contains(data/tags, 'Server_SecondIP')) and not(contains(data/tags, 'Network_device'))">
                   <tr>
                       <td>
@@ -60,15 +60,15 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
                         X
                       </xsl:if>
                     </td>
-                  <td><xsl:value-of select="count(nodes/sensor[contains(data/sensorkind,'snmpmemory')])"/></td>
+                  <td><xsl:value-of select="count(nodes/sensor[contains(data/sensorkind,'snmpmemory')]) + count(nodes/sensor[contains(data/sensorkind,'wmimemory')])"/></td>
                   <td>
-                    <xsl:value-of select="count(nodes/sensor[contains(data/sensorkind,'snmpdiskfree')])"/>
+                    <xsl:value-of select="count(nodes/sensor[contains(data/sensorkind,'snmpdiskfree')]) + count(nodes/sensor[contains(data/sensorkind,'wmidiskspace')])"/>
                   </td>
                   <td>
-                    <xsl:value-of select="count(nodes/sensor[contains(data/sensorkind,'snmpcpu')])"/>
+                    <xsl:value-of select="count(nodes/sensor[contains(data/sensorkind,'snmpcpu')]) + count(nodes/sensor[contains(data/sensorkind,'wmiprocessor')]) + count(nodes/sensor[contains(data/sensorkind,'snmplinuxloadavg')])"/>
                   </td>
                   <td>
-                    <xsl:value-of select="count(nodes/sensor[contains(data/sensorkind,'snmpuptime')])"/>
+                    <xsl:value-of select="count(nodes/sensor[contains(data/sensorkind,'snmpuptime')]) + count(nodes/sensor[contains(data/sensorkind,'wmiuptime')])"/>
                   </td>
                   <!--          <xsl:for-each select="nodes/sensor">
               <xsl:value-of select="data/sensorkind"/>
