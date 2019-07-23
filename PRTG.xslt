@@ -46,9 +46,15 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/20
             </tr>
               <xsl:for-each select="nodes/device | nodes/group/nodes/device">
                 <xsl:sort order ="ascending" select="data/name"/>
-                <xsl:variable name="sensorcount"
-                    select="count(nodes/sensor[contains(data/sensorkind,'snmpmemory')]) + count(nodes/sensor[contains(data/sensorkind,'wmimemory')]) + count(nodes/sensor[contains(data/sensorkind,'sshmeminfo')]) + count(nodes/sensor[contains(data/sensorkind,'snmpdiskfree')]) + count(nodes/sensor[contains(data/sensorkind,'wmidiskspace')]) + count(nodes/sensor[contains(data/sensorkind,'sshdiskfree')]) + count(nodes/sensor[contains(data/sensorkind,'snmpcpu')]) + count(nodes/sensor[contains(data/sensorkind,'wmiprocessor')]) + count(nodes/sensor[contains(data/sensorkind,'sshloadavg')]) + count(nodes/sensor[contains(data/sensorkind,'snmplinuxloadavg')]) + count(nodes/sensor[contains(data/sensorkind,'snmpuptime')]) + count(nodes/sensor[contains(data/sensorkind,'wmiuptime')]) + count(nodes/sensor[contains(data/sensorkind,'snmpciscosystemhealth')])"/>
-                  <xsl:if test="not(contains(data/name, 'Probe Device')) and not(contains(data/name, 'PRTG')) and not($sensorcount >= 4) and not(contains(data/tags, 'vendors_Cisco')) and not(contains(data/tags, 'gateway')) and not(contains(data/tags, 'alienvault_interface')) and not(contains(data/tags, 'vmware_esx')) and not(contains(data/tags, 'waf_vip')) and not(contains(data/tags, 'remote_endpoint')) and not(contains(data/tags, 'ups')) and not(contains(data/tags, 'san_controller')) and not(contains(data/tags, 'Server_SecondIP')) and not(contains(data/tags, 'Network_device'))">
+                <xsl:variable name="memorysensorcount"
+                    select="count(nodes/sensor[contains(data/sensorkind,'snmpmemory')]) + count(nodes/sensor[contains(data/sensorkind,'wmimemory')]) + count(nodes/sensor[contains(data/sensorkind,'sshmeminfo')])"/>
+                <xsl:variable name="disksensorcount"
+                    select="count(nodes/sensor[contains(data/sensorkind,'snmpdiskfree')]) + count(nodes/sensor[contains(data/sensorkind,'wmidiskspace')]) + count(nodes/sensor[contains(data/sensorkind,'sshdiskfree')])"/>
+                <xsl:variable name="cpusensorcount"
+                    select="count(nodes/sensor[contains(data/sensorkind,'snmpcpu')]) + count(nodes/sensor[contains(data/sensorkind,'wmiprocessor')]) + count(nodes/sensor[contains(data/sensorkind,'sshloadavg')]) + count(nodes/sensor[contains(data/sensorkind,'snmplinuxloadavg')])"/>
+                <xsl:variable name="uptimesensorcount"
+                    select="count(nodes/sensor[contains(data/sensorkind,'snmpuptime')]) + count(nodes/sensor[contains(data/sensorkind,'wmiuptime')]) + count(nodes/sensor[contains(data/sensorkind,'snmpciscosystemhealth')])"/>
+                <xsl:if test="not(contains(data/name, 'Probe Device')) and not(contains(data/name, 'PRTG')) and not($memorysensorcount >= 1) and not($disksensorcount >= 1) and not($cpusensorcount >= 1) and not($uptimesensorcount >= 1) and not(contains(data/tags, 'vendors_Cisco')) and not(contains(data/tags, 'gateway')) and not(contains(data/tags, 'alienvault_interface')) and not(contains(data/tags, 'vmware_esx')) and not(contains(data/tags, 'waf_vip')) and not(contains(data/tags, 'remote_endpoint')) and not(contains(data/tags, 'ups')) and not(contains(data/tags, 'san_controller')) and not(contains(data/tags, 'Server_SecondIP')) and not(contains(data/tags, 'Network_device'))">
                   <tr>
                       <td>
                         <a href="https://prtg.networks.local/device.htm?id={@id}" target="_new">
